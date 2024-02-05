@@ -1,0 +1,22 @@
+{
+  "name": "bpmn-service",
+  "version": "1.0.0",
+  "description": "OpenProcessHuis Bpmn Service",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/lblod/bpmn-service.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lblod/bpmn-service/issues"
+  },
+  "homepage": "https://github.com/lblod/bpmn-service#readme",
+  "dependencies": {
+    "@comake/rmlmapper-js": "^0.5.2"
+  }
+}
