@@ -395,6 +395,14 @@ teamingAI:ErrorEventDefinitionMapping
         rr:objectMap [ rr:constant bbo:ErrorEventDefinition ]
     ],
     [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:EventDefinition ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:RootElement ]
+    ],
+    [
         rr:predicate muCore:uuid;
         rr:objectMap <#UuidFunctionMapping>
     ],
