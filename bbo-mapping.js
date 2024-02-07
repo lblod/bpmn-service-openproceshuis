@@ -427,6 +427,10 @@ teamingAI:ErrorMapping
         rr:objectMap [ rr:constant bbo:Error ]
     ],
     [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:RootElement ]
+    ],
+    [
         rr:predicate muCore:uuid;
         rr:objectMap <#UuidFunctionMapping>
     ],
