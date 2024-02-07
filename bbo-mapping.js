@@ -543,7 +543,7 @@ teamingAI:InclusiveGatewayMapping
         rr:objectMap [ rr:template "{./*[name()='bpmn:incoming']}" ]
     ].
 
-teamingAI:IntermediateThrowMapping
+teamingAI:IntermediateThrowEventMapping
     a rr:TriplesMap;
 
     rml:logicalSource [
@@ -557,6 +557,22 @@ teamingAI:IntermediateThrowMapping
     rr:predicateObjectMap [
         rr:predicate rdf:type;
         rr:objectMap [ rr:constant bbo:IntermediateThrowEvent ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:ThrowEvent ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Event ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowNode ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowElement ]
     ],
     [
         rr:predicate muCore:uuid;
