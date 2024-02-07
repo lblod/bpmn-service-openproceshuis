@@ -1147,6 +1147,22 @@ teamingAI:StartEventMapping
         rr:objectMap [ rr:constant bbo:StartEvent ]
     ],
     [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:CatchEvent ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Event ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowNode ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowElement ]
+    ],
+    [
         rr:predicate muCore:uuid;
         rr:objectMap <#UuidFunctionMapping>
     ],
