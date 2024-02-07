@@ -455,6 +455,18 @@ teamingAI:ExlusiveGatewayMapping
         rr:objectMap [ rr:constant bbo:ExclusiveGateway ]
     ],
     [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Gateway ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowNode ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowElement ]
+    ],
+    [
         rr:predicate muCore:uuid;
         rr:objectMap <#UuidFunctionMapping>
     ],
