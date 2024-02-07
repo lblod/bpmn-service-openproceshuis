@@ -1063,6 +1063,10 @@ teamingAI:SequenceFlowMapping
         rr:objectMap [ rr:constant bbo:SequenceFlow ]
     ],
     [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowElement ]
+    ],
+    [
         rr:predicate muCore:uuid;
         rr:objectMap <#UuidFunctionMapping>
     ],
