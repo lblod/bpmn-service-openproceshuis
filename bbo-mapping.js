@@ -1195,6 +1195,22 @@ teamingAI:SubProcessMapping
         rr:objectMap [ rr:constant bbo:SubProcess ]
     ],
     [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Activity ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowNode ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowElement ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowElementsContainer ]
+    ],
+    [
         rr:predicate muCore:uuid;
         rr:objectMap <#UuidFunctionMapping>
     ],
