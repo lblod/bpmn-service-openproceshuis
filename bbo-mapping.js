@@ -17,8 +17,7 @@ export const mapping = (uploadResourceUri) => `
 <#UuidFunctionMapping>
     fnml:functionValue [
         rr:subjectMap <#UuidFunctionMapping>;
-
-    rr:predicateObjectMap [
+        rr:predicateObjectMap [
             rr:predicate fno:executes ;
             rr:objectMap [ rr:constant idlab-fn:random ]
         ]
@@ -72,6 +71,22 @@ teamingAI:BoundaryEventMapping
         rr:objectMap [ rr:constant bbo:BoundaryEvent ]
     ],
     [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:CatchEvent ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Event ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowNode ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowElement ]
+    ],
+    [
         rr:predicate muCore:uuid;
         rr:objectMap <#UuidFunctionMapping>
     ],
@@ -110,6 +125,22 @@ teamingAI:BusinessRuleTaskMapping
     rr:predicateObjectMap [
         rr:predicate rdf:type;
         rr:objectMap [ rr:constant bbo:BusinessRuleTask ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Task ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Activity ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowNode ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowElement ]
     ],
     [
         rr:predicate muCore:uuid;
@@ -316,6 +347,22 @@ teamingAI:EndEventMapping
         rr:objectMap [ rr:constant bbo:EndEvent ]
     ],
     [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:ThrowEvent ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Event ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowNode ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowElement ]
+    ],
+    [
         rr:predicate muCore:uuid;
         rr:objectMap <#UuidFunctionMapping>
     ],
@@ -348,6 +395,14 @@ teamingAI:ErrorEventDefinitionMapping
         rr:objectMap [ rr:constant bbo:ErrorEventDefinition ]
     ],
     [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:EventDefinition ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:RootElement ]
+    ],
+    [
         rr:predicate muCore:uuid;
         rr:objectMap <#UuidFunctionMapping>
     ],
@@ -372,6 +427,10 @@ teamingAI:ErrorMapping
         rr:objectMap [ rr:constant bbo:Error ]
     ],
     [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:RootElement ]
+    ],
+    [
         rr:predicate muCore:uuid;
         rr:objectMap <#UuidFunctionMapping>
     ],
@@ -394,6 +453,18 @@ teamingAI:ExlusiveGatewayMapping
     rr:predicateObjectMap [
         rr:predicate rdf:type;
         rr:objectMap [ rr:constant bbo:ExclusiveGateway ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Gateway ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowNode ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowElement ]
     ],
     [
         rr:predicate muCore:uuid;
@@ -436,6 +507,18 @@ teamingAI:InclusiveGatewayMapping
         rr:objectMap [ rr:constant bbo:InclusiveGateway ]
     ],
     [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Gateway ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowNode ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowElement ]
+    ],
+    [
         rr:predicate muCore:uuid;
         rr:objectMap <#UuidFunctionMapping>
     ],
@@ -460,7 +543,7 @@ teamingAI:InclusiveGatewayMapping
         rr:objectMap [ rr:template "{./*[name()='bpmn:incoming']}" ]
     ].
 
-teamingAI:IntermediateThrowMapping
+teamingAI:IntermediateThrowEventMapping
     a rr:TriplesMap;
 
     rml:logicalSource [
@@ -474,6 +557,22 @@ teamingAI:IntermediateThrowMapping
     rr:predicateObjectMap [
         rr:predicate rdf:type;
         rr:objectMap [ rr:constant bbo:IntermediateThrowEvent ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:ThrowEvent ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Event ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowNode ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowElement ]
     ],
     [
         rr:predicate muCore:uuid;
@@ -572,6 +671,22 @@ teamingAI:ManualTaskMapping
         rr:objectMap [ rr:constant bbo:ManualTask ]
     ],
     [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Task ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Activity ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowNode ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowElement ]
+    ],
+    [
         rr:predicate muCore:uuid;
         rr:objectMap <#UuidFunctionMapping>
     ],
@@ -598,6 +713,14 @@ teamingAI:MessageEventDefinitionMapping
     rr:predicateObjectMap [
         rr:predicate rdf:type;
         rr:objectMap [ rr:constant bbo:MessageEventDefinition ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:EventDefinition ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:RootElement ]
     ],
     [
         rr:predicate muCore:uuid;
@@ -658,6 +781,18 @@ teamingAI:ParallelGatewayMapping
     rr:predicateObjectMap [
         rr:predicate rdf:type;
         rr:objectMap [ rr:constant bbo:ParallelGateway ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Gateway ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowNode ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowElement ]
     ],
     [
         rr:predicate muCore:uuid;
@@ -732,6 +867,18 @@ teamingAI:ProcessMapping
         rr:objectMap [ rr:constant bbo:Process ]
     ],
     [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowElementsContainer ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:CallableElement ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:RootElement ]
+    ],
+    [
         rr:predicate muCore:uuid;
         rr:objectMap <#UuidFunctionMapping>
     ],
@@ -784,6 +931,22 @@ teamingAI:ReceiveTaskMapping
         rr:objectMap [ rr:constant bbo:ReceiveTask ]
     ],
     [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Task ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Activity ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowNode ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowElement ]
+    ],
+    [
         rr:predicate muCore:uuid;
         rr:objectMap <#UuidFunctionMapping>
     ],
@@ -810,6 +973,22 @@ teamingAI:ScriptTaskMapping
     rr:predicateObjectMap [
         rr:predicate rdf:type;
         rr:objectMap [ rr:constant bbo:ScriptTask ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Task ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Activity ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowNode ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowElement ]
     ],
     [
         rr:predicate muCore:uuid;
@@ -840,6 +1019,22 @@ teamingAI:SendTaskMapping
         rr:objectMap [ rr:constant bbo:SendTask ]
     ],
     [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Task ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Activity ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowNode ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowElement ]
+    ],
+    [
         rr:predicate muCore:uuid;
         rr:objectMap <#UuidFunctionMapping>
     ],
@@ -866,6 +1061,10 @@ teamingAI:SequenceFlowMapping
     rr:predicateObjectMap [
         rr:predicate rdf:type;
         rr:objectMap [ rr:constant bbo:SequenceFlow ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowElement ]
     ],
     [
         rr:predicate muCore:uuid;
@@ -904,6 +1103,22 @@ teamingAI:ServiceTaskMapping
         rr:objectMap [ rr:constant bbo:ServiceTask ]
     ],
     [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Task ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Activity ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowNode ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowElement ]
+    ],
+    [
         rr:predicate muCore:uuid;
         rr:objectMap <#UuidFunctionMapping>
     ],
@@ -930,6 +1145,22 @@ teamingAI:StartEventMapping
     rr:predicateObjectMap [
         rr:predicate rdf:type;
         rr:objectMap [ rr:constant bbo:StartEvent ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:CatchEvent ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Event ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowNode ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowElement ]
     ],
     [
         rr:predicate muCore:uuid;
@@ -964,6 +1195,22 @@ teamingAI:SubProcessMapping
         rr:objectMap [ rr:constant bbo:SubProcess ]
     ],
     [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Activity ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowNode ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowElement ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowElementsContainer ]
+    ],
+    [
         rr:predicate muCore:uuid;
         rr:objectMap <#UuidFunctionMapping>
     ],
@@ -990,6 +1237,18 @@ teamingAI:TaskMapping
     rr:predicateObjectMap [
         rr:predicate rdf:type;
         rr:objectMap [ rr:constant bbo:Task ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Activity ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowNode ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowElement ]
     ],
     [
         rr:predicate muCore:uuid;
@@ -1046,6 +1305,22 @@ teamingAI:UserTaskMapping
     rr:predicateObjectMap [
         rr:predicate rdf:type;
         rr:objectMap [ rr:constant bbo:UserTask ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Task ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:Activity ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowNode ]
+    ],
+    [
+        rr:predicate rdf:type;
+        rr:objectMap [ rr:constant bbo:FlowElement ]
     ],
     [
         rr:predicate muCore:uuid;
