@@ -483,7 +483,7 @@ teamingAI:ExlusiveGatewayMapping
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
     ],
     [
-        rr:predicate bbo:DefaultSequenceFlow;
+        rr:predicate bbo:has_defaultElement;
         rr:objectMap [ rr:template "{@default}" ]
     ],
     [
@@ -535,7 +535,7 @@ teamingAI:InclusiveGatewayMapping
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
     ],
     [
-        rr:predicate bbo:DefaultSequenceFlow;
+        rr:predicate bbo:has_defaultElement;
         rr:objectMap [ rr:template "{@default}" ]
     ],
     [
@@ -807,7 +807,7 @@ teamingAI:ParallelGatewayMapping
         rr:objectMap <#UuidFunctionMapping>
     ],
     [
-        rr:predicate bbo:DefaultSequenceFlow;
+        rr:predicate bbo:has_defaultElement;
         rr:objectMap [ rr:template "{@default}" ]
     ],
     [
