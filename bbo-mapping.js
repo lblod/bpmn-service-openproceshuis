@@ -99,7 +99,7 @@ teamingAI:BoundaryEventMapping
         rr:objectMap [ rml:reference "@name" ]
     ],
     [
-        rr:predicate bbo:has_targetRef;
+        rr:predicate bbo:has_outgoing;
         rr:objectMap [ rr:template "{./*[name()='bpmn:outgoing']}" ]
     ],
     [
@@ -375,7 +375,7 @@ teamingAI:EndEventMapping
         rr:objectMap [ rml:reference "@name" ]
     ],
     [
-        rr:predicate bbo:has_sourceRef;
+        rr:predicate bbo:has_incoming;
         rr:objectMap [ rr:template "{./*[name()='bpmn:incoming']}" ]
     ].
 
@@ -483,11 +483,11 @@ teamingAI:ExlusiveGatewayMapping
         rr:objectMap [ rml:reference "@name" ]
     ],
     [
-        rr:predicate bbo:has_targetRef;
+        rr:predicate bbo:has_outgoing;
         rr:objectMap [ rr:template "{./*[name()='bpmn:outgoing']}" ]
     ],
     [
-        rr:predicate bbo:has_sourceRef;
+        rr:predicate bbo:has_incoming;
         rr:objectMap [ rr:template "{./*[name()='bpmn:incoming']}" ]
     ].
 
@@ -535,11 +535,11 @@ teamingAI:InclusiveGatewayMapping
         rr:objectMap [ rml:reference "@name" ]
     ],
     [
-        rr:predicate bbo:has_targetRef;
+        rr:predicate bbo:has_outgoing;
         rr:objectMap [ rr:template "{./*[name()='bpmn:outgoing']}" ]
     ],
     [
-        rr:predicate bbo:has_sourceRef;
+        rr:predicate bbo:has_incoming;
         rr:objectMap [ rr:template "{./*[name()='bpmn:incoming']}" ]
     ].
 
@@ -587,11 +587,11 @@ teamingAI:IntermediateThrowEventMapping
         rr:objectMap [ rml:reference "@name" ]
     ],
     [
-        rr:predicate bbo:has_targetRef;
+        rr:predicate bbo:has_outgoing;
         rr:objectMap [ rr:template "{./*[name()='bpmn:outgoing']}" ]
     ],
     [
-        rr:predicate bbo:has_sourceRef;
+        rr:predicate bbo:has_incoming;
         rr:objectMap [ rr:template "{./*[name()='bpmn:incoming']}" ]
     ],
     [
@@ -811,11 +811,11 @@ teamingAI:ParallelGatewayMapping
         rr:objectMap [ rml:reference "@name" ]
     ],
     [
-        rr:predicate bbo:has_targetRef;
+        rr:predicate bbo:has_outgoing;
         rr:objectMap [ rr:template "{./*[name()='bpmn:outgoing']}" ]
     ],
     [
-        rr:predicate bbo:has_sourceRef;
+        rr:predicate bbo:has_incoming;
         rr:objectMap [ rr:template "{./*[name()='bpmn:incoming']}" ]
     ].
 
@@ -1167,7 +1167,7 @@ teamingAI:StartEventMapping
         rr:objectMap <#UuidFunctionMapping>
     ],
     [
-        rr:predicate bbo:has_targetRef;
+        rr:predicate bbo:has_outgoing;
         rr:objectMap [ rr:template "{./*[name()='bpmn:outgoing']}" ]
     ],
     [
