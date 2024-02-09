@@ -99,7 +99,7 @@ teamingAI:BoundaryEventMapping
         rr:objectMap [ rml:reference "@name" ]
     ],
     [
-        rr:predicate bbo:has_targetRef;
+        rr:predicate bbo:has_outgoing;
         rr:objectMap [ rr:template "{./*[name()='bpmn:outgoing']}" ]
     ],
     [
@@ -109,6 +109,10 @@ teamingAI:BoundaryEventMapping
     [
         rr:predicate bbo:has_eventDefinition;
         rr:objectMap [ rr:template "{./*[name()='bpmn:errorEventDefinition']/@id}" ]
+    ],
+    [
+        rr:predicate teamingAI:belongsToProcess;
+        rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
     ].
 
 teamingAI:BusinessRuleTaskMapping
@@ -375,7 +379,7 @@ teamingAI:EndEventMapping
         rr:objectMap [ rml:reference "@name" ]
     ],
     [
-        rr:predicate bbo:has_sourceRef;
+        rr:predicate bbo:has_incoming;
         rr:objectMap [ rr:template "{./*[name()='bpmn:incoming']}" ]
     ].
 
@@ -437,6 +441,10 @@ teamingAI:ErrorMapping
     [
         rr:predicate bbo:name;
         rr:objectMap [ rml:reference "@name" ]
+    ],
+    [
+        rr:predicate teamingAI:belongsToProcess;
+        rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
     ].
 
 teamingAI:ExlusiveGatewayMapping
@@ -475,7 +483,7 @@ teamingAI:ExlusiveGatewayMapping
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
     ],
     [
-        rr:predicate bbo:DefaultSequenceFlow;
+        rr:predicate bbo:has_defaultElement;
         rr:objectMap [ rr:template "{@default}" ]
     ],
     [
@@ -483,11 +491,11 @@ teamingAI:ExlusiveGatewayMapping
         rr:objectMap [ rml:reference "@name" ]
     ],
     [
-        rr:predicate bbo:has_targetRef;
+        rr:predicate bbo:has_outgoing;
         rr:objectMap [ rr:template "{./*[name()='bpmn:outgoing']}" ]
     ],
     [
-        rr:predicate bbo:has_sourceRef;
+        rr:predicate bbo:has_incoming;
         rr:objectMap [ rr:template "{./*[name()='bpmn:incoming']}" ]
     ].
 
@@ -527,7 +535,7 @@ teamingAI:InclusiveGatewayMapping
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
     ],
     [
-        rr:predicate bbo:DefaultSequenceFlow;
+        rr:predicate bbo:has_defaultElement;
         rr:objectMap [ rr:template "{@default}" ]
     ],
     [
@@ -535,11 +543,11 @@ teamingAI:InclusiveGatewayMapping
         rr:objectMap [ rml:reference "@name" ]
     ],
     [
-        rr:predicate bbo:has_targetRef;
+        rr:predicate bbo:has_outgoing;
         rr:objectMap [ rr:template "{./*[name()='bpmn:outgoing']}" ]
     ],
     [
-        rr:predicate bbo:has_sourceRef;
+        rr:predicate bbo:has_incoming;
         rr:objectMap [ rr:template "{./*[name()='bpmn:incoming']}" ]
     ].
 
@@ -587,11 +595,11 @@ teamingAI:IntermediateThrowEventMapping
         rr:objectMap [ rml:reference "@name" ]
     ],
     [
-        rr:predicate bbo:has_targetRef;
+        rr:predicate bbo:has_outgoing;
         rr:objectMap [ rr:template "{./*[name()='bpmn:outgoing']}" ]
     ],
     [
-        rr:predicate bbo:has_sourceRef;
+        rr:predicate bbo:has_incoming;
         rr:objectMap [ rr:template "{./*[name()='bpmn:incoming']}" ]
     ],
     [
@@ -799,7 +807,7 @@ teamingAI:ParallelGatewayMapping
         rr:objectMap <#UuidFunctionMapping>
     ],
     [
-        rr:predicate bbo:DefaultSequenceFlow;
+        rr:predicate bbo:has_defaultElement;
         rr:objectMap [ rr:template "{@default}" ]
     ],
     [
@@ -811,11 +819,11 @@ teamingAI:ParallelGatewayMapping
         rr:objectMap [ rml:reference "@name" ]
     ],
     [
-        rr:predicate bbo:has_targetRef;
+        rr:predicate bbo:has_outgoing;
         rr:objectMap [ rr:template "{./*[name()='bpmn:outgoing']}" ]
     ],
     [
-        rr:predicate bbo:has_sourceRef;
+        rr:predicate bbo:has_incoming;
         rr:objectMap [ rr:template "{./*[name()='bpmn:incoming']}" ]
     ].
 
@@ -913,6 +921,10 @@ teamingAI:PropertyMapping
     [
         rr:predicate bbo:has_property_element;
         rr:objectMap [ rr:template "{../@id}" ]
+    ],
+    [
+        rr:predicate teamingAI:belongsToProcess;
+        rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
     ].
 
 teamingAI:ReceiveTaskMapping
@@ -1167,7 +1179,7 @@ teamingAI:StartEventMapping
         rr:objectMap <#UuidFunctionMapping>
     ],
     [
-        rr:predicate bbo:has_targetRef;
+        rr:predicate bbo:has_outgoing;
         rr:objectMap [ rr:template "{./*[name()='bpmn:outgoing']}" ]
     ],
     [
@@ -1221,6 +1233,10 @@ teamingAI:SubProcessMapping
     [
         rr:predicate teamingAI:belongsToView;
         rr:objectMap [ rr:constant teamingAI:BusinessProcessManagementView ]
+    ],
+    [
+        rr:predicate teamingAI:belongsToProcess;
+        rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
     ].
 
 teamingAI:TaskMapping
