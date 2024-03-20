@@ -1,4 +1,4 @@
-export const mapping = (uploadResourceUri, groupUri) => `
+export const mapping = (virtualFileUri) => `
 @prefix bbo: <https://www.irit.fr/recherches/MELODI/ontologies/BBO#>.
 @prefix bboExtension: <https://www.teamingai-project.eg/BBOExtension#>.
 @prefix ql: <http://semweb.mmlab.be/ns/ql#>.
@@ -13,7 +13,6 @@ export const mapping = (uploadResourceUri, groupUri) => `
 @prefix muCore: <http://mu.semte.ch/vocabularies/core/>.
 @prefix prov: <http://www.w3.org/ns/prov#>.
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix schema: <https://schema.org/>.
 
 <#UuidFunctionMapping>
     fnml:functionValue [
@@ -893,11 +892,7 @@ teamingAI:ProcessMapping
     ],
     [
         rr:predicate prov:wasDerivedFrom;
-        rr:objectMap [ rr:template "${uploadResourceUri}" ]
-    ],
-    [
-        rr:predicate schema:publisher;
-        rr:objectMap [ rr:template "${groupUri}" ]
+        rr:objectMap [ rr:template "${virtualFileUri}" ]
     ].
 
 teamingAI:PropertyMapping

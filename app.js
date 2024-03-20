@@ -42,10 +42,10 @@ app.post("/", async (req, res, next) => {
   if (bindings.length === 0) {
     return res.status(404).send("Not Found");
   }
-  const uploadResourceUri = bindings[0].fileUrl.value;
-  const uploadUri = bindings[0].uri.value;
+  const physicalFileUri = bindings[0].physicalFileUri.value;
+  const virtualFileUri = bindings[0].virtualFileUri.value;
 
-  const filePath = uploadResourceUri.replace("share://", STORAGE_FOLDER_PATH);
+  const filePath = physicalFileUri.replace("share://", STORAGE_FOLDER_PATH);
   if (!existsSync(filePath)) {
     return res
       .status(500)
@@ -56,7 +56,7 @@ app.post("/", async (req, res, next) => {
   const bpmn = await readFile(filePath, "utf-8");
   let triples;
   try {
-    triples = await translateToRdf(bpmn, uploadUri, groupUri);
+    triples = await translateToRdf(bpmn, virtualFileUri);
   } catch (e) {
     console.log(
       `Something unexpected went wrong while handling bpmn extraction!`
@@ -73,7 +73,7 @@ app.post("/", async (req, res, next) => {
 });
 
 app.use(errorHandler);
-async function translateToRdf(bpmn, uploadResourceUri, groupUri) {
+async function translateToRdf(bpmn, virtualFileUri) {
   if (!bpmn || bpmn.trim().length === 0) {
     const error = new Error(
       "Invalid content: The provided file does not contain any content."
@@ -94,7 +94,7 @@ async function translateToRdf(bpmn, uploadResourceUri, groupUri) {
   };
 
   const triples = await RmlMapper.parseTurtle(
-    bboMapping(uploadResourceUri, groupUri),
+    bboMapping(virtualFileUri),
     inputFiles,
     options
   );
