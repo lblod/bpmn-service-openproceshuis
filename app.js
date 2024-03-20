@@ -25,20 +25,15 @@ app.use(
 
 app.post("/", async (req, res, next) => {
   const sessionUri = req.get(HEADER_MU_SESSION_ID);
-  console.log("SESSION URI:", sessionUri);
   if (!sessionUri) {
     return res.status(401).send("Session ID header not found.");
   }
   const groupUriQuery = generateGroupUriSelectQuery(sessionUri);
-  console.log("GROUP URI QUERY:", groupUriQuery);
   const groupUriResult = await querySudo(groupUriQuery);
-  const groupUriBindings = groupUriResult.results.bindings;
-  console.log("GROUP URI BINDINGS:", groupUriBindings);
-  if (groupUriBindings.length === 0) {
+  const groupUri = groupUriResult.results.bindings[0]?.groupUri?.value;
+  if (!groupUri) {
     return res.status(401).send("User not affiliated with any organization.");
   }
-  const groupUri = groupUriBindings[0].groupUri.value;
-  console.log("GROUP URI:", groupUri);
 
   const uploadResourceUuid = req.query.id;
   const selectQuery = generateUploadResourceUriSelectQuery(uploadResourceUuid);
@@ -61,7 +56,7 @@ app.post("/", async (req, res, next) => {
   const bpmn = await readFile(filePath, "utf-8");
   let triples;
   try {
-    triples = await translateToRdf(bpmn, uploadUri);
+    triples = await translateToRdf(bpmn, uploadUri, groupUri);
   } catch (e) {
     console.log(
       `Something unexpected went wrong while handling bpmn extraction!`
@@ -78,7 +73,7 @@ app.post("/", async (req, res, next) => {
 });
 
 app.use(errorHandler);
-async function translateToRdf(bpmn, uploadResourceUri) {
+async function translateToRdf(bpmn, uploadResourceUri, groupUri) {
   if (!bpmn || bpmn.trim().length === 0) {
     const error = new Error(
       "Invalid content: The provided file does not contain any content."
@@ -99,7 +94,7 @@ async function translateToRdf(bpmn, uploadResourceUri) {
   };
 
   const triples = await RmlMapper.parseTurtle(
-    bboMapping(uploadResourceUri),
+    bboMapping(uploadResourceUri, groupUri),
     inputFiles,
     options
   );

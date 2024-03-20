@@ -1,18 +1,19 @@
-export const mapping = (uploadResourceUri) => `
-@prefix bbo: <https://www.irit.fr/recherches/MELODI/ontologies/BBO#> .
-@prefix bboExtension: <https://www.teamingai-project.eg/BBOExtension#> .
-@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
-@prefix rami: <https://w3id.org/i40/rami#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
-@prefix rr: <http://www.w3.org/ns/r2rml#> .
-@prefix teamingAI: <https://www.teamingai-project.eu/> .
-@prefix fnml:   <http://semweb.mmlab.be/ns/fnml#> .
-@prefix fno: 	<https://w3id.org/function/ontology#> .
-@prefix idlab-fn: <http://example.com/idlab/function/> .
+export const mapping = (uploadResourceUri, groupUri) => `
+@prefix bbo: <https://www.irit.fr/recherches/MELODI/ontologies/BBO#>.
+@prefix bboExtension: <https://www.teamingai-project.eg/BBOExtension#>.
+@prefix ql: <http://semweb.mmlab.be/ns/ql#>.
+@prefix rami: <https://w3id.org/i40/rami#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix rml: <http://semweb.mmlab.be/ns/rml#>.
+@prefix rr: <http://www.w3.org/ns/r2rml#>.
+@prefix teamingAI: <https://www.teamingai-project.eu/>.
+@prefix fnml:   <http://semweb.mmlab.be/ns/fnml#>.
+@prefix fno: 	<https://w3id.org/function/ontology#>.
+@prefix idlab-fn: <http://example.com/idlab/function/>.
 @prefix muCore: <http://mu.semte.ch/vocabularies/core/>.
 @prefix prov: <http://www.w3.org/ns/prov#>.
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix schema: <https://schema.org/>.
 
 <#UuidFunctionMapping>
     fnml:functionValue [
@@ -893,6 +894,10 @@ teamingAI:ProcessMapping
     [
         rr:predicate prov:wasDerivedFrom;
         rr:objectMap [ rr:template "${uploadResourceUri}" ]
+    ],
+    [
+        rr:predicate schema:publisher;
+        rr:objectMap [ rr:template "${groupUri}" ]
     ].
 
 teamingAI:PropertyMapping
