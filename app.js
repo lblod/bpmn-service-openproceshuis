@@ -31,10 +31,12 @@ app.post("/", async (req, res, next) => {
   const groupUriQuery = generateGroupUriSelectQuery(sessionUri);
   console.log("GROUP URI QUERY:", groupUriQuery);
   const groupUriResult = await query(groupUriQuery);
-  const groupUri = groupUriResult.results.bindings[0]?.groupUri?.value;
-  if (!groupUri) {
+  const groupUriBindings = groupUriResult.results.bindings;
+  console.log("GROUP URI BINDINGS:", groupUriBindings);
+  if (groupUriBindings.length === 0) {
     return res.status(401).send("User not affiliated with any organization.");
   }
+  const groupUri = groupUriBindings[0].groupUri.value;
   console.log("GROUP URI:", groupUri);
 
   const uploadResourceUuid = req.query.id;
