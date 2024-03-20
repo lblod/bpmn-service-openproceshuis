@@ -36,7 +36,7 @@ export function generateGroupUriSelectQuery(sessionUri) {
 export function generateFileGroupLinkInsertQuery(virtualFileUri, groupUri) {
   // prettier-ignore
   return `
-    PREFIX schema: <http://schema.org/>
+    PREFIX schema: <https://schema.org/>
 
     INSERT DATA {
       ${sparqlEscapeUri(virtualFileUri)} schema:publisher ${sparqlEscapeUri(groupUri)} .
