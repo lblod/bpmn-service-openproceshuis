@@ -1,4 +1,5 @@
 import { app, update, query, errorHandler } from "mu";
+import { querySudo } from "@lblod/mu-auth-sudo";
 import bodyParser from "body-parser";
 
 import { readFile } from "fs/promises";
@@ -30,7 +31,7 @@ app.post("/", async (req, res, next) => {
   }
   const groupUriQuery = generateGroupUriSelectQuery(sessionUri);
   console.log("GROUP URI QUERY:", groupUriQuery);
-  const groupUriResult = await query(groupUriQuery);
+  const groupUriResult = await querySudo(groupUriQuery);
   const groupUriBindings = groupUriResult.results.bindings;
   console.log("GROUP URI BINDINGS:", groupUriBindings);
   if (groupUriBindings.length === 0) {
