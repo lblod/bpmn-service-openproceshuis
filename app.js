@@ -36,14 +36,14 @@ app.post("/", async (req, res, next) => {
   }
 
   const virtualFileUuid = req.query.id;
-  const selectQuery = generateFileUriSelectQuery(virtualFileUuid);
-  const result = await query(selectQuery);
-  const bindings = result.results.bindings;
-  if (bindings.length === 0) {
+  const fileUriQuery = generateFileUriSelectQuery(virtualFileUuid);
+  const fileUriResult = await query(fileUriQuery);
+  const fileUriBindings = fileUriResult.results.bindings;
+  if (fileUriBindings.length === 0) {
     return res.status(404).send("Not Found");
   }
-  const physicalFileUri = bindings[0].physicalFileUri.value;
-  const virtualFileUri = bindings[0].virtualFileUri.value;
+  const physicalFileUri = fileUriBindings[0].physicalFileUri.value;
+  const virtualFileUri = fileUriBindings[0].virtualFileUri.value;
 
   const filePath = physicalFileUri.replace("share://", STORAGE_FOLDER_PATH);
   if (!existsSync(filePath)) {

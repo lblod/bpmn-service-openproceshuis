@@ -7,8 +7,6 @@ export function generateUpdateQuery(triples) {
 export function generateFileUriSelectQuery(virtualFileUuid) {
   return `
     PREFIX mu: <http://mu.semte.ch/vocabularies/core/>
-    PREFIX nfo: <http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#>
-    PREFIX dbpedia: <http://dbpedia.org/ontology/>
     PREFIX nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>
 
     SELECT ?virtualFileUri ?physicalFileUri
