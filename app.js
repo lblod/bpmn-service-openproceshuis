@@ -8,7 +8,7 @@ import { mapping as bboMapping } from "./bbo-mapping.js";
 import { existsSync } from "fs";
 import {
   generateUpdateQuery,
-  generateUploadResourceUriSelectQuery,
+  generateFileUriSelectQuery,
   generateGroupUriSelectQuery,
 } from "./sparql-queries.js";
 
@@ -35,8 +35,8 @@ app.post("/", async (req, res, next) => {
     return res.status(401).send("User not affiliated with any organization.");
   }
 
-  const uploadResourceUuid = req.query.id;
-  const selectQuery = generateUploadResourceUriSelectQuery(uploadResourceUuid);
+  const virtualFileUuid = req.query.id;
+  const selectQuery = generateFileUriSelectQuery(virtualFileUuid);
   const result = await query(selectQuery);
   const bindings = result.results.bindings;
   if (bindings.length === 0) {

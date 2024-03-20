@@ -4,7 +4,7 @@ export function generateUpdateQuery(triples) {
   return `INSERT DATA { ${triples} }`;
 }
 
-export function generateUploadResourceUriSelectQuery(uploadResourceUuid) {
+export function generateFileUriSelectQuery(virtualFileUuid) {
   return `
     PREFIX mu: <http://mu.semte.ch/vocabularies/core/>
     PREFIX nfo: <http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#>
@@ -13,9 +13,7 @@ export function generateUploadResourceUriSelectQuery(uploadResourceUuid) {
 
     SELECT ?virtualFileUri ?physicalFileUri
     WHERE {
-      ?virtualFileUri mu:uuid ${sparqlEscapeString(uploadResourceUuid)};
-           nfo:fileName ?fileName ;
-           dbpedia:fileExtension ?extension .
+      ?virtualFileUri mu:uuid ${sparqlEscapeString(virtualFileUuid)} .
       ?physicalFileUri nie:dataSource ?virtualFileUri .
     }`;
 }
