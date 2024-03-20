@@ -1,10 +1,15 @@
 import { sparqlEscapeString, sparqlEscapeUri } from "mu";
 
-export function generateUpdateQuery(triples) {
-  return `INSERT DATA { ${triples} }`;
+export function generateBboTriplesInsertQuery(bboTriples) {
+  // prettier-ignore
+  return `
+    INSERT DATA {
+      ${bboTriples}
+    }`;
 }
 
 export function generateFileUriSelectQuery(virtualFileUuid) {
+  // prettier-ignore
   return `
     PREFIX mu: <http://mu.semte.ch/vocabularies/core/>
     PREFIX nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>
@@ -17,6 +22,7 @@ export function generateFileUriSelectQuery(virtualFileUuid) {
 }
 
 export function generateGroupUriSelectQuery(sessionUri) {
+  // prettier-ignore
   return `
     PREFIX muExt: <http://mu.semte.ch/vocabularies/ext/>
 
@@ -25,4 +31,14 @@ export function generateGroupUriSelectQuery(sessionUri) {
       ${sparqlEscapeUri(sessionUri)} muExt:sessionGroup ?groupUri .
     }
   `;
+}
+
+export function generateFileGroupLinkInsertQuery(virtualFileUri, groupUri) {
+  // prettier-ignore
+  return `
+    PREFIX schema: <http://schema.org/>
+
+    INSERT DATA {
+      ${sparqlEscapeUri(virtualFileUri)} schema:publisher ${sparqlEscapeUri(groupUri)} .
+    }`;
 }

@@ -7,9 +7,10 @@ import * as RmlMapper from "@comake/rmlmapper-js";
 import { mapping as bboMapping } from "./bbo-mapping.js";
 import { existsSync } from "fs";
 import {
-  generateUpdateQuery,
+  generateBboTriplesInsertQuery,
   generateFileUriSelectQuery,
   generateGroupUriSelectQuery,
+  generateFileGroupLinkInsertQuery,
 } from "./sparql-queries.js";
 
 const STORAGE_FOLDER_PATH = "/share/";
@@ -42,8 +43,14 @@ app.post("/", async (req, res, next) => {
   if (fileUriBindings.length === 0) {
     return res.status(404).send("Not Found");
   }
-  const physicalFileUri = fileUriBindings[0].physicalFileUri.value;
   const virtualFileUri = fileUriBindings[0].virtualFileUri.value;
+  const physicalFileUri = fileUriBindings[0].physicalFileUri.value;
+
+  const fileGroupLinkInsertQuery = generateFileGroupLinkInsertQuery(
+    virtualFileUri,
+    groupUri
+  );
+  await update(fileGroupLinkInsertQuery);
 
   const filePath = physicalFileUri.replace("share://", STORAGE_FOLDER_PATH);
   if (!existsSync(filePath)) {
@@ -53,10 +60,10 @@ app.post("/", async (req, res, next) => {
         "Could not find file in path. Check if the physical file is available on the server and if this service has the right mountpoint."
       );
   }
-  const bpmn = await readFile(filePath, "utf-8");
-  let triples;
+  const bpmnFile = await readFile(filePath, "utf-8");
+  let bboTriples;
   try {
-    triples = await translateToRdf(bpmn, virtualFileUri);
+    bboTriples = await translateToRdf(bpmnFile, virtualFileUri);
   } catch (e) {
     console.log(
       `Something unexpected went wrong while handling bpmn extraction!`
@@ -65,8 +72,8 @@ app.post("/", async (req, res, next) => {
     return next(e);
   }
 
-  const bboQuery = generateUpdateQuery(triples);
-  await update(bboQuery);
+  const bboTriplesInsertQuery = generateBboTriplesInsertQuery(bboTriples);
+  await update(bboTriplesInsertQuery);
   return res
     .status(200)
     .send({ message: "bpmn extraction completed successfully" });
