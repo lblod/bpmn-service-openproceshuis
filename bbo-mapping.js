@@ -46,7 +46,10 @@ teamingAI:AssociationMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:00cbc3c9-b2a8-4474-bbe9-c3a977f3feaf ]
+        rr:objectMap [
+            rr:constant ns1:00cbc3c9-b2a8-4474-bbe9-c3a977f3feaf;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate teamingAI:belongsToProcess;
@@ -98,7 +101,10 @@ teamingAI:BoundaryEventMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:9a72a481-d111-405b-903b-18242e121502 ]
+        rr:objectMap [
+            rr:constant ns1:9a72a481-d111-405b-903b-18242e121502;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate bbo:attachedToRef;
@@ -162,7 +168,10 @@ teamingAI:BusinessRuleTaskMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:546044f1-455c-4949-8d45-df024bc76b49 ]
+        rr:objectMap [
+            rr:constant ns1:546044f1-455c-4949-8d45-df024bc76b49;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate bbo:name;
@@ -194,7 +203,10 @@ teamingAI:CollaborationMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:ff8338d3-c491-413c-aae3-2a57dc3f75f5 ]
+        rr:objectMap [
+            rr:constant ns1:ff8338d3-c491-413c-aae3-2a57dc3f75f5;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate teamingAI:belongsToProcess;
@@ -222,7 +234,10 @@ teamingAI:DataInputAssociationMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:7a53a259-0e26-4688-8137-be50458264ec ]
+        rr:objectMap [
+            rr:constant ns1:7a53a259-0e26-4688-8137-be50458264ec;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate teamingAI:belongsToProcess;
@@ -262,7 +277,10 @@ teamingAI:DataObjectMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:3e0a146b-b483-40e7-a901-3144d5be2ee2 ]
+        rr:objectMap [
+            rr:constant ns1:3e0a146b-b483-40e7-a901-3144d5be2ee2;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate teamingAI:belongsToProcess;
@@ -290,7 +308,10 @@ teamingAI:DataObjectReferenceMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:ad8ee890-12a8-4a8a-bb23-10b3b2403df0 ]
+        rr:objectMap [
+            rr:constant ns1:ad8ee890-12a8-4a8a-bb23-10b3b2403df0;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate bbo:name;
@@ -326,7 +347,10 @@ teamingAI:DataOutputAssociationMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:63da1337-6cd7-441c-a5c1-940f2fbd0f34 ]
+        rr:objectMap [
+            rr:constant ns1:63da1337-6cd7-441c-a5c1-940f2fbd0f34;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate teamingAI:belongsToProcess;
@@ -362,7 +386,10 @@ teamingAI:DataStoreReferenceMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:b5de5008-7aeb-41c5-a2f2-26f1d4ca6d49 ]
+        rr:objectMap [
+            rr:constant ns1:b5de5008-7aeb-41c5-a2f2-26f1d4ca6d49;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate teamingAI:belongsToProcess;
@@ -410,7 +437,10 @@ teamingAI:EndEventMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:55e98451-1f29-420c-87e3-3e01a7d5abc5 ]
+        rr:objectMap [
+            rr:constant ns1:55e98451-1f29-420c-87e3-3e01a7d5abc5;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate teamingAI:belongsToProcess;
@@ -454,7 +484,10 @@ teamingAI:ErrorEventDefinitionMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:107c7feb-64ff-409f-a5ce-1e85324274fc ]
+        rr:objectMap [
+            rr:constant ns1:107c7feb-64ff-409f-a5ce-1e85324274fc;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate teamingAI:belongsToProcess;
@@ -486,7 +519,10 @@ teamingAI:ErrorMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:cc636682-385a-4e63-8043-740d34e06254 ]
+        rr:objectMap [
+            rr:constant ns1:cc636682-385a-4e63-8043-740d34e06254;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate bbo:name;
@@ -530,7 +566,10 @@ teamingAI:ExlusiveGatewayMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:0bf0aea4-798d-4d7a-bd44-34f09f763eb3 ]
+        rr:objectMap [
+            rr:constant ns1:0bf0aea4-798d-4d7a-bd44-34f09f763eb3;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate teamingAI:belongsToProcess;
@@ -586,7 +625,10 @@ teamingAI:InclusiveGatewayMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:76d6c227-ca62-4b47-8829-ebf1b60c3671 ]
+        rr:objectMap [
+            rr:constant ns1:76d6c227-ca62-4b47-8829-ebf1b60c3671;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate teamingAI:belongsToProcess;
@@ -646,7 +688,10 @@ teamingAI:IntermediateThrowEventMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:6f1559a6-e0af-41bf-b14e-ff2597a3d8dc ]
+        rr:objectMap [
+            rr:constant ns1:6f1559a6-e0af-41bf-b14e-ff2597a3d8dc;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate teamingAI:belongsToProcess;
@@ -690,7 +735,10 @@ teamingAI:LaneMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:003fb962-c26b-468d-9baa-7a03d84c9322 ]
+        rr:objectMap [
+            rr:constant ns1:003fb962-c26b-468d-9baa-7a03d84c9322;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate teamingAI:belongsToProcess;
@@ -726,7 +774,10 @@ teamingAI:LaneSetMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:73c4071b-a618-49df-8119-573a1e21e652 ]
+        rr:objectMap [
+            rr:constant ns1:73c4071b-a618-49df-8119-573a1e21e652;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate teamingAI:belongsToProcess;
@@ -770,7 +821,10 @@ teamingAI:ManualTaskMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:969d520f-2946-4323-940a-b4e21891d428 ]
+        rr:objectMap [
+            rr:constant ns1:969d520f-2946-4323-940a-b4e21891d428;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate bbo:name;
@@ -810,7 +864,10 @@ teamingAI:MessageEventDefinitionMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:d45c81c4-ab87-4dc1-b324-1c3289e2c36a ]
+        rr:objectMap [
+            rr:constant ns1:d45c81c4-ab87-4dc1-b324-1c3289e2c36a;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate teamingAI:belongsToProcess;
@@ -838,7 +895,10 @@ teamingAI:MessageFlowMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:28b6c81b-e493-4dc4-b700-d062cc08e86a ]
+        rr:objectMap [
+            rr:constant ns1:28b6c81b-e493-4dc4-b700-d062cc08e86a;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate teamingAI:belongsToProcess;
@@ -890,7 +950,10 @@ teamingAI:ParallelGatewayMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:5099bb41-9d87-475c-80d0-5767ba32b0bb ]
+        rr:objectMap [
+            rr:constant ns1:5099bb41-9d87-475c-80d0-5767ba32b0bb;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate bbo:has_defaultElement;
@@ -934,7 +997,10 @@ teamingAI:ParticipantMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:9a54f457-bfc3-46ba-93db-560eaaa183d3 ]
+        rr:objectMap [
+            rr:constant ns1:9a54f457-bfc3-46ba-93db-560eaaa183d3;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate teamingAI:belongsToProcess;
@@ -982,7 +1048,10 @@ teamingAI:ProcessMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:0996925f-9d2c-497c-86df-fad62d974790 ]
+        rr:objectMap [
+            rr:constant ns1:0996925f-9d2c-497c-86df-fad62d974790;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate prov:wasDerivedFrom;
@@ -1010,7 +1079,10 @@ teamingAI:PropertyMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:e7bc4c02-f476-430a-b3a0-2fa62e9245eb ]
+        rr:objectMap [
+            rr:constant ns1:e7bc4c02-f476-430a-b3a0-2fa62e9245eb;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate bbo:name;
@@ -1062,7 +1134,10 @@ teamingAI:ReceiveTaskMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:3c8764ac-576d-4b4f-ae58-c42d30265240 ]
+        rr:objectMap [
+            rr:constant ns1:3c8764ac-576d-4b4f-ae58-c42d30265240;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate bbo:name;
@@ -1110,7 +1185,10 @@ teamingAI:ScriptTaskMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:2691ce7b-82ae-4a66-ba8a-d84d5103a69a ]
+        rr:objectMap [
+            rr:constant ns1:2691ce7b-82ae-4a66-ba8a-d84d5103a69a;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate bbo:name;
@@ -1158,7 +1236,10 @@ teamingAI:SendTaskMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:6c3de872-2ddf-465a-941b-3b7080d09866 ]
+        rr:objectMap [
+            rr:constant ns1:6c3de872-2ddf-465a-941b-3b7080d09866;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate bbo:name;
@@ -1194,7 +1275,10 @@ teamingAI:SequenceFlowMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:e146c432-9a2f-41aa-b9a1-5efb8a8174e4 ]
+        rr:objectMap [
+            rr:constant ns1:e146c432-9a2f-41aa-b9a1-5efb8a8174e4;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate bbo:has_sourceRef;
@@ -1250,7 +1334,10 @@ teamingAI:ServiceTaskMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:ca45e504-9421-4916-9f73-6500b9f45095 ]
+        rr:objectMap [
+            rr:constant ns1:ca45e504-9421-4916-9f73-6500b9f45095;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate bbo:name;
@@ -1298,7 +1385,10 @@ teamingAI:StartEventMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:298c0ed5-2624-4865-9c87-439d89640746 ]
+        rr:objectMap [
+            rr:constant ns1:298c0ed5-2624-4865-9c87-439d89640746;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate bbo:has_outgoing;
@@ -1350,7 +1440,10 @@ teamingAI:SubProcessMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:270b79df-7a22-4064-a8a0-f5713873700d ]
+        rr:objectMap [
+            rr:constant ns1:270b79df-7a22-4064-a8a0-f5713873700d;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate teamingAI:belongsToRAMILayer;
@@ -1398,7 +1491,10 @@ teamingAI:TaskMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:3a7c56c8-30b5-4b31-a1c9-f6d7ae0929b7 ]
+        rr:objectMap [
+            rr:constant ns1:3a7c56c8-30b5-4b31-a1c9-f6d7ae0929b7;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate bbo:name;
@@ -1430,7 +1526,10 @@ teamingAI:TextAnnotationMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:05dfacae-2772-458f-a54e-b996b0499501 ]
+        rr:objectMap [
+            rr:constant ns1:05dfacae-2772-458f-a54e-b996b0499501;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate teamingAI:belongsToProcess;
@@ -1478,7 +1577,10 @@ teamingAI:UserTaskMapping
     ],
     [
         rr:predicate org:classification;
-        rr:objectMap [ rr:constant ns1:8b23ea64-8748-46e6-90ce-dd85cfdafe8d ]
+        rr:objectMap [
+            rr:constant ns1:8b23ea64-8748-46e6-90ce-dd85cfdafe8d;
+            rr:termType rr:IRI
+        ]
     ],
     [
         rr:predicate bbo:name;
