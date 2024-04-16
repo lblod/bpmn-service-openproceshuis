@@ -533,7 +533,7 @@ teamingAI:ErrorMapping
         rr:objectMap [ rr:parentTriplesMap teamingAI:ProcessMapping ]
     ].
 
-teamingAI:ExlusiveGatewayMapping
+teamingAI:ExclusiveGatewayMapping
     a rr:TriplesMap;
 
     rml:logicalSource [
