@@ -94,7 +94,7 @@ app.get("/:id/download", async (req, res) => {
     return res.status(406).send("The requested file format is not available.");
   }
 
-  const virtualFileUuid = req.query.id;
+  const virtualFileUuid = req.params.id;
   const fileUriQuery = generateFileUriSelectQuery(virtualFileUuid);
   const fileUriResult = await query(fileUriQuery);
   const fileUriBindings = fileUriResult.results.bindings;
