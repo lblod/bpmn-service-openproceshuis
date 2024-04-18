@@ -18,6 +18,7 @@
   "homepage": "https://github.com/lblod/bpmn-service#readme",
   "dependencies": {
     "@comake/rmlmapper-js": "^0.5.2",
-    "@lblod/mu-auth-sudo": "^0.6.1"
+    "@lblod/mu-auth-sudo": "^0.6.1",
+    "bpmn-to-image": "^0.7.0"
   }
 }
