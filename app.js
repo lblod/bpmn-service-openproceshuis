@@ -84,11 +84,11 @@ app.post("/", async (req, res, next) => {
 app.get("/:id/download", async (req, res) => {
   const acceptType = req.headers["accept"];
   let tempFilePath = path.join("/temp", uuid());
-  if (acceptType.includes("image/svg+xml")) {
+  if (acceptType?.includes("image/svg+xml")) {
     tempFilePath += ".svg";
-  } else if (acceptType.includes("image/png")) {
+  } else if (acceptType?.includes("image/png")) {
     tempFilePath += ".png";
-  } else if (acceptType.includes("application/pdf")) {
+  } else if (acceptType?.includes("application/pdf")) {
     tempFilePath += ".pdf";
   } else {
     return res.status(406).send("The requested file format is not available.");
