@@ -111,8 +111,12 @@ app.get("/:id/download", async (req, res) => {
       );
   }
 
+  console.log("temp file location:", tempFilePath);
+  console.log("exists before:", existsSync(tempFilePath));
+
   try {
     await convertBpmn(bpmnFilePath, tempFilePath);
+    console.log("exists after:", existsSync(tempFilePath));
     return res.sendFile(tempFilePath);
   } catch (error) {
     return res.status(500).send(`Conversion error: ${error.message}`);
