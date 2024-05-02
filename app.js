@@ -1,3 +1,5 @@
+console.log("first log");
+
 import { app, update, query, errorHandler, uuid } from "mu";
 import { querySudo } from "@lblod/mu-auth-sudo";
 import bodyParser from "body-parser";
@@ -81,7 +83,9 @@ app.post("/", async (req, res, next) => {
 });
 
 app.get("/:id/download", async (req, res) => {
+  console.log("welcome");
   const acceptType = req.headers["accept"];
+  console.log("accept type:", acceptType);
   let tempFilePath = path.join("/temp", uuid());
   if (acceptType?.includes("image/svg+xml")) {
     tempFilePath += ".svg";
@@ -92,6 +96,7 @@ app.get("/:id/download", async (req, res) => {
   } else {
     return res.status(406).send("The requested file format is not available.");
   }
+  console.log("temp file path:", tempFilePath);
 
   const virtualFileUuid = req.params.id;
   const fileUriQuery = generateFileUriSelectQuery(virtualFileUuid);
@@ -101,8 +106,11 @@ app.get("/:id/download", async (req, res) => {
     return res.status(404).send("Not Found");
   }
   const physicalFileUri = fileUriBindings[0].physicalFileUri.value;
+  console.log("physical file uri:", physicalFileUri);
 
   const bpmnFilePath = physicalFileUri.replace("share://", STORAGE_FOLDER_PATH);
+  console.log("bpmn file path:", bpmnFilePath);
+  console.log("bpmn file exists:", existsSync(bpmnFilePath));
   if (!existsSync(bpmnFilePath)) {
     return res
       .status(500)
@@ -119,6 +127,7 @@ app.get("/:id/download", async (req, res) => {
     console.log("exists after:", existsSync(tempFilePath));
     return res.sendFile(tempFilePath);
   } catch (error) {
+    console.error("error:", error);
     return res.status(500).send(`Conversion error: ${error.message}`);
   }
 });
