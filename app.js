@@ -1,7 +1,6 @@
 import { app, update, query, errorHandler, uuid } from "mu";
 import { querySudo } from "@lblod/mu-auth-sudo";
 import bodyParser from "body-parser";
-
 import { readFile, unlink } from "fs/promises";
 import * as RmlMapper from "@comake/rmlmapper-js";
 import { mapping as bboMapping } from "./bbo-mapping.js";
