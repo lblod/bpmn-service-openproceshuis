@@ -11,7 +11,7 @@ import {
   generateGroupUriSelectQuery,
   generateFileGroupLinkInsertQuery,
 } from "./sparql-queries.js";
-import { convert as convertBpmn } from "bpmn-to-image";
+import { convert as convertBpmn } from "./bpmn-to-image.js";
 import path from "path";
 
 const STORAGE_FOLDER_PATH = "/share/";
