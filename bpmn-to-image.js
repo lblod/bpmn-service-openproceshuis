@@ -1,11 +1,11 @@
 // Source: https://github.com/bpmn-io/bpmn-to-image/blob/main/index.js
 
-import puppeteer from "puppeteer";
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
+const puppeteer = require("puppeteer");
+const fs = require("fs");
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const { basename, resolve, relative } = require("path");
+
+const { readFileSync } = require("fs");
 
 async function printDiagram(page, options) {
   const {
@@ -17,21 +17,25 @@ async function printDiagram(page, options) {
     deviceScaleFactor,
   } = options;
 
-  const diagramXML = fs.readFileSync(input, "utf8");
+  const diagramXML = readFileSync(input, "utf8");
+
   const diagramTitle =
-    title === false ? false : title.length ? title : path.basename(input);
+    title === false ? false : title.length ? title : basename(input);
 
   await page.goto(`file://${__dirname}/skeleton.html`);
 
-  const viewerScript = path.relative(
+  const viewerScript = relative(
     __dirname,
-    puppeteer.resolve("bpmn-js/dist/bpmn-viewer.production.min.js")
+    require.resolve("bpmn-js/dist/bpmn-viewer.production.min.js")
   );
 
   const desiredViewport = await page.evaluate(
-    async (diagramXML, options) => {
+    async function (diagramXML, options) {
       const { viewerScript, ...openOptions } = options;
+
       await loadScript(viewerScript);
+
+      // returns desired viewport
       return openDiagram(diagramXML, openOptions);
     },
     diagramXML,
@@ -43,10 +47,10 @@ async function printDiagram(page, options) {
     }
   );
 
-  await page.setViewport({
+  page.setViewport({
     width: Math.round(desiredViewport.width),
     height: Math.round(desiredViewport.height),
-    deviceScaleFactor,
+    deviceScaleFactor: deviceScaleFactor,
   });
 
   await page.evaluate(() => resize());
@@ -72,6 +76,7 @@ async function printDiagram(page, options) {
       });
     } else if (output.endsWith(".svg")) {
       const svg = await page.evaluate(() => toSVG());
+
       fs.writeFileSync(output, svg, "utf8");
     } else {
       console.error(`Unknown output file format: ${output}`);
@@ -116,6 +121,8 @@ async function convertAll(conversions, options = {}) {
   });
 }
 
+module.exports.convertAll = convertAll;
+
 async function convert(input, output) {
   return await convertAll([
     {
@@ -125,4 +132,4 @@ async function convert(input, output) {
   ]);
 }
 
-export { convertAll, convert };
+module.exports.convert = convert;
