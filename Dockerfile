@@ -17,11 +17,17 @@ RUN apt-get update \
       --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
-# Add user so we don't need --no-sandbox.
+# Add user so we don't need --no-sandbox
 RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
     && mkdir -p /home/pptruser/Downloads \
+    && mkdir -p /home/pptruser/.cache/puppeteer \
+    && cp -r /root/.cache/puppeteer/* /home/pptruser/.cache/puppeteer/ \
     && chown -R pptruser:pptruser /home/pptruser \
-    && chown -R pptruser:pptruser /usr/src/app
+    && chown -R pptruser:pptruser /usr/src/app \
+    && chown -R pptruser:pptruser /app \
+    && chown -R pptruser:pptruser /app.original \
+    && chown -R pptruser:pptruser /config \
+    && chown -R pptruser:pptruser /config.original
 
 # Run everything after as non-privileged user
 USER pptruser
