@@ -86,7 +86,7 @@ app.get("/:id/download", async (req, res) => {
   console.log("welcome");
   const acceptType = req.headers["accept"];
   console.log("accept type:", acceptType);
-  let tempFilePath = path.join("/temp", uuid());
+  let tempFilePath = path.join("/tmp", uuid());
   if (acceptType?.includes("image/svg+xml")) {
     tempFilePath += ".svg";
   } else if (acceptType?.includes("image/png")) {
