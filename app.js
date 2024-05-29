@@ -110,7 +110,9 @@ app.get("/:id/download", async (req, res) => {
 
   try {
     await convertBpmn(bpmnFilePath, tempFilePath);
-    return res.sendFile(tempFilePath);
+    return res.sendFile(tempFilePath, {}, async () => {
+      await unlink(tempFilePath);
+    });
   } catch (error) {
     console.error("error:", error);
     return res.status(500).send(`Conversion error: ${error.message}`);
