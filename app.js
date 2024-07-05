@@ -1,5 +1,4 @@
 import { app, update, query, errorHandler, uuid } from "mu";
-import { getJob, runAsyncJob } from "./job.js";
 import { querySudo } from "@lblod/mu-auth-sudo";
 import bodyParser from "body-parser";
 import { readFile, unlink } from "fs/promises";
@@ -18,10 +17,6 @@ import path from "path";
 const STORAGE_FOLDER_PATH = "/share/";
 const HEADER_MU_SESSION_ID = "mu-session-id";
 
-const JOB_GRAPH = process.env.JOB_GRAPH || "http://mu.semte.ch/graphs/bpmn-job";
-const JOB_OPERATION = "http://redpencil.data.gift/id/jobs/concept/JobOperation/BpmnToRdf";
-
-
 app.use(
   bodyParser.json({
     type: function (req) {
@@ -29,35 +24,6 @@ app.use(
     },
   })
 );
-
-
-app.get("/job/status", async (req, res, _) => {
-  const sessionUri = req.get(HEADER_MU_SESSION_ID);
-  if (!sessionUri) {
-    return res.status(401).send("Session ID header not found.");
-  }
-  const groupUriQuery = generateGroupUriSelectQuery(sessionUri);
-  const groupUriResult = await querySudo(groupUriQuery);
-  const groupUri = groupUriResult.results.bindings[0]?.groupUri?.value;
-  if (!groupUri) {
-    return res.status(401).send("User not affiliated with any organization.");
-  }
-
-  const virtualFileUuid = req.query.id;
-  const fileUriQuery = generateFileUriSelectQuery(virtualFileUuid);
-  const fileUriResult = await query(fileUriQuery);
-  const fileUriBindings = fileUriResult.results.bindings;
-  if (fileUriBindings.length === 0) {
-    return res.status(404).send("Not Found");
-  }
-  const virtualFileUri = fileUriBindings[0].virtualFileUri.value;
-  const status = await getJob(JOB_OPERATION, groupUri, virtualFileUri);
-  if (!status) {
-    return res.status(404).send("job not found");
-  }
-  return res.status(200).send({ status });
-
-});
 
 app.post("/", async (req, res, next) => {
   const sessionUri = req.get(HEADER_MU_SESSION_ID);
@@ -96,24 +62,19 @@ app.post("/", async (req, res, next) => {
       );
   }
   const bpmnFile = await readFile(filePath, "utf-8");
+  let bboTriples;
+  try {
+    bboTriples = await translateToRdf(bpmnFile, virtualFileUri);
+  } catch (e) {
+    console.error(e);
+    return next(e);
+  }
 
-  const asyncJob = async () => {
-    let bboTriples;
-    try {
-      bboTriples = await translateToRdf(bpmnFile, virtualFileUri);
-    } catch (e) {
-      console.error(e);
-      return next(e);
-    }
-
-    const bboTriplesInsertQuery = generateBboTriplesInsertQuery(bboTriples);
-    await update(bboTriplesInsertQuery);
-  };
-  runAsyncJob(JOB_GRAPH, JOB_OPERATION, groupUri, virtualFileUri, asyncJob);
-
+  const bboTriplesInsertQuery = generateBboTriplesInsertQuery(bboTriples);
+  await update(bboTriplesInsertQuery);
   return res
-    .status(202)
-    .send({ message: "bpmn extraction job running" });
+    .status(200)
+    .send({ message: "bpmn extraction completed successfully" });
 });
 
 app.get("/:id/download", async (req, res) => {
