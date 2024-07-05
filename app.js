@@ -69,9 +69,19 @@ app.post("/", async (req, res, next) => {
     console.error(e);
     return next(e);
   }
+  const chunkArr = (arr, size) =>
+    Array.from({ length: Math.ceil(arr.length / size) }, (_, i) =>
+      arr.slice(i * size, i * size + size)
+    );
+  const chunks = chunkArr(bboTriples.split('\n'), 100);
 
-  const bboTriplesInsertQuery = generateBboTriplesInsertQuery(bboTriples);
-  await update(bboTriplesInsertQuery);
+  for (const chunk of chunks) {
+    const q = `
+        INSERT DATA {
+            ${chunk.join('\n')}
+        }`
+    await update(q);
+  }
   return res
     .status(200)
     .send({ message: "bpmn extraction completed successfully" });
