@@ -128,18 +128,12 @@ async function extractProcessSteps(bpmnFilePath, virtualFileUri) {
   const bpmnFile = await readFile(bpmnFilePath, "utf-8");
   const bboTriples = await translateToRdf(bpmnFile, virtualFileUri);
 
-  const chunkArr = (arr, size) =>
-    Array.from({ length: Math.ceil(arr.length / size) }, (_, i) =>
-      arr.slice(i * size, i * size + size)
-    );
-  const chunks = chunkArr(bboTriples, 100);
-
-  for (const chunk of chunks) {
-    const q = `
-        INSERT DATA {
-            ${chunk.join("\n")}
-        }`;
-    await update(q);
+  const chunkSize = 100;
+  for (let i = 0; i < bboTriples.length; i += chunkSize) {
+    const bboTriplesChunk = bboTriples.slice(i, i + chunkSize);
+    const insertBboTriplesQuery =
+      generateBboTriplesInsertQuery(bboTriplesChunk);
+    await update(insertBboTriplesQuery);
   }
 }
 

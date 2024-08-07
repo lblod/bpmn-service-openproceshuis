@@ -4,7 +4,7 @@ export function generateBboTriplesInsertQuery(bboTriples) {
   // prettier-ignore
   return `
     INSERT DATA {
-      ${bboTriples}
+      ${bboTriples.join("\n")}
     }`;
 }
 
