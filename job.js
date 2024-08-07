@@ -160,9 +160,11 @@ export async function runAsyncJob(
     await asyncFunc();
     await updateStatusJob(jobsGraph, jobUri, STATUS_SUCCESS);
   } catch (error) {
-    console.error(`Error while scheduling job ${jobOperation}: ${error}`);
+    console.error(
+      `Error while scheduling job ${jobOperation}: ${error.message}`
+    );
     console.error(error);
-    await storeError(jobsGraph, creatorUri, error);
+    await storeError(jobsGraph, creatorUri, error.message);
     await updateStatusJob(jobsGraph, jobUri, STATUS_FAILED);
   }
 }
