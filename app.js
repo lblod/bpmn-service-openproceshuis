@@ -66,13 +66,8 @@ app.post("/", async (req, res) => {
       );
   }
 
-  const extractionJob = extractProcessSteps(filePath, virtualFileUri);
-  runAsyncJob(
-    JOB_GRAPH,
-    JOB_OPERATION,
-    groupUri,
-    virtualFileUri,
-    extractionJob
+  runAsyncJob(JOB_GRAPH, JOB_OPERATION, groupUri, virtualFileUri, () =>
+    extractProcessSteps(filePath, virtualFileUri)
   );
 
   return res
