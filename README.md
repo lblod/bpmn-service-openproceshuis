@@ -21,17 +21,3 @@ The file targeted by the provided file ID is passed to an RML mapper, which expe
 #### Headers
 
 - `mu-session-id`: each authenticated user has its own session. Based on the user's session ID, the endpoint will find the group (_Bestuur_) and link it to the BPMN file as follows: `<file uri> schema:publisher <group uri>`. Make sure the stack containing the OPH BPMN service also contains the [mu-identifier](https://github.com/mu-semtech/mu-identifier) service, as it will automatically add this header to each authenticated request.
-
-### GET `/:id/download`
-
-The file targeted by the provided file ID is converted to the given file format and as such returned to the user, ready for downdoad.
-
-#### Route parameters
-
-- `id`: the ID of the file to be converted and subsequently downloaded.
-
-#### Headers
-
-- `accept`: the MIME type indicating the format of the file to download. The options are `image/svg+xml`, `image/png` and `application/pdf`.
-
-> Downloading a BPMN file in its original format, is not handled by the BPMN service. When using the [OPH microservices stack](https://github.com/lblod/app-openproceshuis), however, the dispatcher is configured in such a way that download requests where none of the above MIME types is provided, are dispatched to the file storage service directly.
