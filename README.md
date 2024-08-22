@@ -12,6 +12,16 @@ The OPH BPMN service is effectively a REST API. It is implemented using the [Exp
 
 The file targeted by the provided file ID is passed to an RML mapper, which expects a BPMN file and iterates over its BPMN elements. The rules specified in [bbo-mapping.js] outline which elements should be converted to triples and eventually inserted into the triplestore.
 
+The endpoint does not wait for the process steps' extraction and insertion into the triplestore. Instead, it fires up a background job responsible for this, and immediately returns an `HTTP 202` response. A subject of type `http://vocab.deri.ie/cogs#Job` is added to the `http://mu.semte.ch/graphs/bpmn-job` graph in the connected triple store. Among others, it holds a property referring to the URI of the BPMN file at stake (i.e. `http://mu.semte.ch/vocabularies/ext/relatedTo`), as well as a property indicating the job's status (i.e. `http://www.w3.org/ns/adms#status`). The latter can assume one of the following values:
+
+- `http://redpencil.data.gift/id/concept/JobStatus/scheduled`
+- `http://redpencil.data.gift/id/concept/JobStatus/busy`
+- `http://redpencil.data.gift/id/concept/JobStatus/success`
+- `http://redpencil.data.gift/id/concept/JobStatus/failed`
+- `http://redpencil.data.gift/id/concept/JobStatus/canceled`
+
+> The [Open Proces Huis microservices stack](https://github.com/lblod/app-openproceshuis) is configured in such a way that it allows for API requests for these _job_ resources. E.g. the `GET` request `/jobs?filter[:exact:resource]=http://mu.semte.ch/services/file-service/files/123` returns all data regarding the job that was fired after the file with file ID _123_ was targeted for process steps extraction and insertion.
+
 #### Query parameters
 
 - `id`: the ID of the file whose process steps should be extracted and inserted into the triplestore.
