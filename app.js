@@ -11,8 +11,6 @@ import {
   generateGroupUriSelectQuery,
   generateFileGroupLinkInsertQuery,
 } from "./sparql-queries.js";
-import { convert as convertBpmn } from "bpmn-to-image";
-import path from "path";
 import { runAsyncJob } from "./job.js";
 
 const STORAGE_FOLDER_PATH = "/share/";
@@ -73,48 +71,6 @@ app.post("/", async (req, res) => {
   return res
     .status(202)
     .send({ message: "process steps extraction job running" });
-});
-
-app.get("/:id/download", async (req, res) => {
-  const acceptType = req.headers["accept"];
-  let tempFilePath = path.join("/tmp", uuid());
-  if (acceptType?.includes("image/svg+xml")) {
-    tempFilePath += ".svg";
-  } else if (acceptType?.includes("image/png")) {
-    tempFilePath += ".png";
-  } else if (acceptType?.includes("application/pdf")) {
-    tempFilePath += ".pdf";
-  } else {
-    return res.status(406).send("The requested file format is not available.");
-  }
-
-  const virtualFileUuid = req.params.id;
-  const fileUriQuery = generateFileUriSelectQuery(virtualFileUuid);
-  const fileUriResult = await query(fileUriQuery);
-  const fileUriBindings = fileUriResult.results.bindings;
-  if (fileUriBindings.length === 0) {
-    return res.status(404).send("Not Found");
-  }
-  const physicalFileUri = fileUriBindings[0].physicalFileUri.value;
-
-  const bpmnFilePath = physicalFileUri.replace("share://", STORAGE_FOLDER_PATH);
-  if (!existsSync(bpmnFilePath)) {
-    return res
-      .status(500)
-      .send(
-        "Could not find file in path. Check if the physical file is available on the server and if this service has the right mountpoint."
-      );
-  }
-
-  try {
-    await convertBpmn(bpmnFilePath, tempFilePath);
-    return res.sendFile(tempFilePath, {}, async () => {
-      await unlink(tempFilePath);
-    });
-  } catch (error) {
-    console.error("error:", error);
-    return res.status(500).send(`Conversion error: ${error.message}`);
-  }
 });
 
 app.use(errorHandler);
