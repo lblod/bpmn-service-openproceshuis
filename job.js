@@ -150,13 +150,14 @@ export async function runAsyncJob(
   relatedResource,
   asyncFunc = async () => {}
 ) {
+  const jobUri = await createJob(
+    jobsGraph,
+    creatorUri,
+    jobOperation,
+    relatedResource
+  );
+
   try {
-    const jobUri = await createJob(
-      jobsGraph,
-      creatorUri,
-      jobOperation,
-      relatedResource
-    );
     await asyncFunc();
     await updateStatusJob(jobsGraph, jobUri, STATUS_SUCCESS);
   } catch (error) {
