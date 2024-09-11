@@ -1,10 +1,10 @@
 import { sparqlEscapeString, sparqlEscapeUri } from "mu";
 
-export function generateBboTriplesInsertQuery(bboTriples) {
+export function generateTriplesInsertQuery(triples) {
   // prettier-ignore
   return `
     INSERT DATA {
-      ${bboTriples.join("\n")}
+      ${triples.join("\n")}
     }`;
 }
 

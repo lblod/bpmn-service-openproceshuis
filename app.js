@@ -6,7 +6,7 @@ import * as RmlMapper from "@comake/rmlmapper-js";
 import { mapping as bboMapping } from "./bbo-mapping.js";
 import { existsSync } from "fs";
 import {
-  generateBboTriplesInsertQuery,
+  generateTriplesInsertQuery,
   generateFileUriSelectQuery,
   generateGroupUriSelectQuery,
   generateFileGroupLinkInsertQuery,
@@ -80,31 +80,7 @@ async function extractAndInsertProcessSteps(bpmnFilePath, virtualFileUri) {
   const bboTriples = await translateToRdf(bpmnFile, virtualFileUri);
 
   const bboTriplesBySubject = chunkTriplesBySubject(bboTriples);
-
-  const maxChunkSize = 100;
-  let index = 0;
-  let bboTriplesChunk = [];
-
-  while (index < bboTriplesBySubject.length) {
-    if (
-      bboTriplesChunk.length === 0 ||
-      bboTriplesChunk.length + bboTriplesBySubject[index].length <= maxChunkSize
-    ) {
-      bboTriplesChunk = bboTriplesChunk.concat(bboTriplesBySubject[index]);
-    }
-
-    index++;
-
-    if (
-      index >= bboTriplesBySubject.length ||
-      bboTriplesChunk.length + bboTriplesBySubject[index].length >= maxChunkSize
-    ) {
-      const insertBboTriplesQuery =
-        generateBboTriplesInsertQuery(bboTriplesChunk);
-      await update(insertBboTriplesQuery);
-      bboTriplesChunk = [];
-    }
-  }
+  await insertTripleChunks(bboTriplesBySubject);
 }
 
 async function translateToRdf(bpmn, virtualFileUri) {
@@ -154,4 +130,29 @@ function chunkTriplesBySubject(triples) {
   }, {});
 
   return Object.values(triplesBySubjectMap);
+}
+
+async function insertTripleChunks(tripleChunks, maxTriplesPerInsert = 100) {
+  let index = 0;
+  let triplesToInsert = [];
+
+  while (index < tripleChunks.length) {
+    if (
+      triplesToInsert.length === 0 ||
+      triplesToInsert.length + tripleChunks[index].length <= maxTriplesPerInsert
+    ) {
+      triplesToInsert = triplesToInsert.concat(tripleChunks[index]);
+    }
+
+    index++;
+
+    if (
+      index >= tripleChunks.length ||
+      triplesToInsert.length + tripleChunks[index].length >= maxTriplesPerInsert
+    ) {
+      const triplesInsertQuery = generateTriplesInsertQuery(triplesToInsert);
+      await update(triplesInsertQuery);
+      triplesToInsert = [];
+    }
+  }
 }
