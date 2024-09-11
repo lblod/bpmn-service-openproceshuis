@@ -65,7 +65,7 @@ app.post("/", async (req, res) => {
   }
 
   runAsyncJob(JOB_GRAPH, JOB_OPERATION, groupUri, virtualFileUri, () =>
-    extractProcessSteps(filePath, virtualFileUri)
+    extractAndInsertProcessSteps(filePath, virtualFileUri)
   );
 
   return res
@@ -75,16 +75,44 @@ app.post("/", async (req, res) => {
 
 app.use(errorHandler);
 
-async function extractProcessSteps(bpmnFilePath, virtualFileUri) {
+async function extractAndInsertProcessSteps(bpmnFilePath, virtualFileUri) {
   const bpmnFile = await readFile(bpmnFilePath, "utf-8");
   const bboTriples = await translateToRdf(bpmnFile, virtualFileUri);
 
-  const chunkSize = 100;
-  for (let i = 0; i < bboTriples.length; i += chunkSize) {
-    const bboTriplesChunk = bboTriples.slice(i, i + chunkSize);
-    const insertBboTriplesQuery =
-      generateBboTriplesInsertQuery(bboTriplesChunk);
-    await update(insertBboTriplesQuery);
+  const bboTriplesBySubject = Object.values(
+    bboTriples.reduce((bboTriplesBySubjectMap, triple) => {
+      const subject = triple.split(" ")[0];
+      if (!bboTriplesBySubjectMap[subject]) {
+        bboTriplesBySubjectMap[subject] = [];
+      }
+      bboTriplesBySubjectMap[subject].push(triple);
+      return bboTriplesBySubjectMap;
+    }, {})
+  );
+
+  const maxChunkSize = 100;
+  let index = 0;
+  let bboTriplesChunk = [];
+
+  while (index < bboTriplesBySubject.length) {
+    if (
+      bboTriplesChunk.length === 0 ||
+      bboTriplesChunk.length + bboTriplesBySubject[index].length <= maxChunkSize
+    ) {
+      bboTriplesChunk = bboTriplesChunk.concat(bboTriplesBySubject[index]);
+    }
+
+    index++;
+
+    if (
+      index >= bboTriplesBySubject.length ||
+      bboTriplesChunk.length + bboTriplesBySubject[index].length >= maxChunkSize
+    ) {
+      const insertBboTriplesQuery =
+        generateBboTriplesInsertQuery(bboTriplesChunk);
+      await update(insertBboTriplesQuery);
+      bboTriplesChunk = [];
+    }
   }
 }
 
