@@ -1,7 +1,7 @@
 import { app, update, query, errorHandler, uuid } from "mu";
 import { querySudo } from "@lblod/mu-auth-sudo";
 import bodyParser from "body-parser";
-import { readFile, unlink } from "fs/promises";
+import { readFile } from "fs/promises";
 import * as RmlMapper from "@comake/rmlmapper-js";
 import { mapping as bboMapping } from "./bbo-mapping.js";
 import { existsSync } from "fs";
@@ -79,16 +79,7 @@ async function extractAndInsertProcessSteps(bpmnFilePath, virtualFileUri) {
   const bpmnFile = await readFile(bpmnFilePath, "utf-8");
   const bboTriples = await translateToRdf(bpmnFile, virtualFileUri);
 
-  const bboTriplesBySubject = Object.values(
-    bboTriples.reduce((bboTriplesBySubjectMap, triple) => {
-      const subject = triple.split(" ")[0];
-      if (!bboTriplesBySubjectMap[subject]) {
-        bboTriplesBySubjectMap[subject] = [];
-      }
-      bboTriplesBySubjectMap[subject].push(triple);
-      return bboTriplesBySubjectMap;
-    }, {})
-  );
+  const bboTriplesBySubject = chunkTriplesBySubject(bboTriples);
 
   const maxChunkSize = 100;
   let index = 0;
@@ -150,4 +141,17 @@ async function translateToRdf(bpmn, virtualFileUri) {
   }
 
   return triples.split("\n");
+}
+
+function chunkTriplesBySubject(triples) {
+  const triplesBySubjectMap = triples.reduce((acc, triple) => {
+    const subject = triple.split(" ")[0];
+
+    if (!acc[subject]) acc[subject] = [];
+    acc[subject].push(triple);
+
+    return acc;
+  }, {});
+
+  return Object.values(triplesBySubjectMap);
 }
