@@ -1,12 +1,12 @@
 import { app, update, query, errorHandler, uuid } from "mu";
 import { querySudo } from "@lblod/mu-auth-sudo";
 import bodyParser from "body-parser";
-import { readFile, unlink } from "fs/promises";
+import { readFile } from "fs/promises";
 import * as RmlMapper from "@comake/rmlmapper-js";
 import { mapping as bboMapping } from "./bbo-mapping.js";
 import { existsSync } from "fs";
 import {
-  generateBboTriplesInsertQuery,
+  generateTriplesInsertQuery,
   generateFileUriSelectQuery,
   generateGroupUriSelectQuery,
   generateFileGroupLinkInsertQuery,
@@ -65,7 +65,7 @@ app.post("/", async (req, res) => {
   }
 
   runAsyncJob(JOB_GRAPH, JOB_OPERATION, groupUri, virtualFileUri, () =>
-    extractProcessSteps(filePath, virtualFileUri)
+    extractAndInsertProcessSteps(filePath, virtualFileUri)
   );
 
   return res
@@ -75,17 +75,12 @@ app.post("/", async (req, res) => {
 
 app.use(errorHandler);
 
-async function extractProcessSteps(bpmnFilePath, virtualFileUri) {
+async function extractAndInsertProcessSteps(bpmnFilePath, virtualFileUri) {
   const bpmnFile = await readFile(bpmnFilePath, "utf-8");
   const bboTriples = await translateToRdf(bpmnFile, virtualFileUri);
 
-  const chunkSize = 100;
-  for (let i = 0; i < bboTriples.length; i += chunkSize) {
-    const bboTriplesChunk = bboTriples.slice(i, i + chunkSize);
-    const insertBboTriplesQuery =
-      generateBboTriplesInsertQuery(bboTriplesChunk);
-    await update(insertBboTriplesQuery);
-  }
+  const bboTriplesBySubject = chunkTriplesBySubject(bboTriples);
+  await insertTripleChunks(bboTriplesBySubject);
 }
 
 async function translateToRdf(bpmn, virtualFileUri) {
@@ -122,4 +117,42 @@ async function translateToRdf(bpmn, virtualFileUri) {
   }
 
   return triples.split("\n");
+}
+
+function chunkTriplesBySubject(triples) {
+  const triplesBySubjectMap = triples.reduce((acc, triple) => {
+    const subject = triple.split(" ")[0];
+
+    if (!acc[subject]) acc[subject] = [];
+    acc[subject].push(triple);
+
+    return acc;
+  }, {});
+
+  return Object.values(triplesBySubjectMap);
+}
+
+async function insertTripleChunks(tripleChunks, maxTriplesPerInsert = 100) {
+  let index = 0;
+  let triplesToInsert = [];
+
+  while (index < tripleChunks.length) {
+    if (
+      triplesToInsert.length === 0 ||
+      triplesToInsert.length + tripleChunks[index].length <= maxTriplesPerInsert
+    ) {
+      triplesToInsert = triplesToInsert.concat(tripleChunks[index]);
+    }
+
+    index++;
+
+    if (
+      index >= tripleChunks.length ||
+      triplesToInsert.length + tripleChunks[index].length >= maxTriplesPerInsert
+    ) {
+      const triplesInsertQuery = generateTriplesInsertQuery(triplesToInsert);
+      await update(triplesInsertQuery);
+      triplesToInsert = [];
+    }
+  }
 }
