@@ -1,11 +1,4 @@
 const rmlExtension = (virtualFileUri) => `
-@prefix dct: <http://purl.org/dc/terms/>.
-@prefix rr: <http://www.w3.org/ns/r2rml#>.
-@prefix teamingAI: <https://www.teamingai-project.eu/>.
-@prefix muCore: <http://mu.semte.ch/vocabularies/core/>.
-@prefix prov: <http://www.w3.org/ns/prov#>.
-@prefix ns1: <http://lblod.data.gift/concepts/>.
-
 teamingAI:AssociationMapping
     rr:predicateObjectMap [
         rr:predicate muCore:uuid;
@@ -451,6 +444,15 @@ teamingAI:UserTaskMapping
             rr:termType rr:IRI
         ]
     ].
+`;
+
+const rmlExtensionPrefixes = `
+@prefix dct: <http://purl.org/dc/terms/>.
+@prefix rr: <http://www.w3.org/ns/r2rml#>.
+@prefix teamingAI: <https://www.teamingai-project.eu/>.
+@prefix muCore: <http://mu.semte.ch/vocabularies/core/>.
+@prefix prov: <http://www.w3.org/ns/prov#>.
+@prefix ns1: <http://lblod.data.gift/concepts/>.
 `;
 
 export const mapping = (virtualFileUri) => `
