@@ -1,7 +1,7 @@
 import { readFile } from "fs/promises";
 
 export async function generateMapping(virtualFileUri) {
-  const dataModelRml = await readFile("bpmn-rml.ttl", "utf-8");
+  const dataModelRml = await readFile("/config/bpmn-rml.ttl", "utf-8");
   return functionalRmlPrefixes + dataModelRml + functionalRml(virtualFileUri);
 }
 
