@@ -3,7 +3,7 @@ import { querySudo } from "@lblod/mu-auth-sudo";
 import bodyParser from "body-parser";
 import { readFile } from "fs/promises";
 import * as RmlMapper from "@comake/rmlmapper-js";
-import { mapping as bboMapping } from "./bbo-mapping.js";
+import { generateMapping } from "./bbo-mapping.js";
 import { existsSync } from "fs";
 import {
   generateTriplesInsertQuery,
@@ -104,7 +104,7 @@ async function translateToRdf(bpmn, virtualFileUri) {
   };
 
   const triples = await RmlMapper.parseTurtle(
-    bboMapping(virtualFileUri),
+    await generateMapping(virtualFileUri),
     inputFiles,
     options
   );
