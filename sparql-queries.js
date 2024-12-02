@@ -13,11 +13,13 @@ export function generateFileUriSelectQuery(virtualFileUuid) {
   return `
     PREFIX mu: <http://mu.semte.ch/vocabularies/core/>
     PREFIX nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>
+    PREFIX dbpedia: <http://dbpedia.org/ontology/>
 
-    SELECT ?virtualFileUri ?physicalFileUri
+    SELECT ?virtualFileUri ?physicalFileUri ?fileExtension
     WHERE {
       ?virtualFileUri mu:uuid ${sparqlEscapeString(virtualFileUuid)} .
       ?physicalFileUri nie:dataSource ?virtualFileUri .
+      ?physicalFileUri dbpedia:fileExtension ?fileExtension .
     }`;
 }
 

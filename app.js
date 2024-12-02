@@ -12,6 +12,8 @@ import {
   generateFileGroupLinkInsertQuery,
 } from "./sparql-queries.js";
 import { runAsyncJob } from "./job.js";
+import { PythonShell } from "python-shell";
+import path from "path";
 
 const STORAGE_FOLDER_PATH = "/share/";
 const HEADER_MU_SESSION_ID = "mu-session-id";
@@ -48,6 +50,7 @@ app.post("/", async (req, res) => {
   }
   const virtualFileUri = fileUriBindings[0].virtualFileUri.value;
   const physicalFileUri = fileUriBindings[0].physicalFileUri.value;
+  const fileExtension = fileUriBindings[0].fileExtension.value;
 
   const fileGroupLinkInsertQuery = generateFileGroupLinkInsertQuery(
     virtualFileUri,
@@ -55,13 +58,24 @@ app.post("/", async (req, res) => {
   );
   await update(fileGroupLinkInsertQuery);
 
-  const filePath = physicalFileUri.replace("share://", STORAGE_FOLDER_PATH);
+  let filePath = physicalFileUri.replace("share://", STORAGE_FOLDER_PATH);
   if (!existsSync(filePath)) {
     return res
       .status(500)
       .send(
         "Could not find file in path. Check if the physical file is available on the server and if this service has the right mountpoint."
       );
+  }
+
+  if (fileExtension === "vsdx") {
+    try {
+      await PythonShell.run("convert_vsdx_to_bpmn.py", { args: [filePath] });
+      const fileName = path.basename(filePath, path.extname(filePath));
+      filePath = path.join(path.dirname(filePath), fileName + ".bpmn");
+      console.log("updated file path:", filePath);
+    } catch (error) {
+      console.error("Error running Python script:", error);
+    }
   }
 
   runAsyncJob(JOB_GRAPH, JOB_OPERATION, groupUri, virtualFileUri, () =>
