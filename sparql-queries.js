@@ -53,14 +53,15 @@ export function generateFileGroupLinkInsertQuery(virtualFileUri, groupUri) {
     }`;
 }
 
-export function generateVisioFileInsertQuery(
+export function generateBpmnVisioFileInsertQuery(
   virtualFileUuid,
   virtualFileUri,
   virtualFileName,
-  fileSize
+  fileSize,
+  visioFileUri
 ) {
-  const fileFormat = "application/octet-stream; charset=binary";
-  const fileExtension = "vsdx";
+  const fileFormat = "text/xml; charset=utf-8";
+  const fileExtension = "bpmn";
   const now = new Date();
 
   const physicalFileUuid = uuid();
@@ -83,7 +84,8 @@ export function generateVisioFileInsertQuery(
           nfo:fileSize ${sparqlEscapeInt(fileSize)} ;
           dbpedia:fileExtension ${sparqlEscapeString(fileExtension)} ;
           dc:created ${sparqlEscapeDateTime(now)} ;
-          dc:modified ${sparqlEscapeDateTime(now)} .
+          dc:modified ${sparqlEscapeDateTime(now)} ;
+          prov:wasDerivedFrom ${sparqlEscapeUri(visioFileUri)} .
 
       ${sparqlEscapeUri(physicalFileUri)} a nfo:FileDataObject ;
           nie:dataSource ${sparqlEscapeUri(virtualFileUri)} ;

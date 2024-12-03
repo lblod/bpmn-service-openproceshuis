@@ -10,7 +10,7 @@ import {
   generateFileUriSelectQuery,
   generateGroupUriSelectQuery,
   generateFileGroupLinkInsertQuery,
-  generateVisioFileInsertQuery,
+  generateBpmnVisioFileInsertQuery,
 } from "./sparql-queries.js";
 import { runAsyncJob } from "./job.js";
 import { PythonShell } from "python-shell";
@@ -72,20 +72,22 @@ app.post("/", async (req, res) => {
   if (fileExtension === "vsdx") {
     await PythonShell.run("convert_vsdx_to_bpmn.py", { args: [filePath] });
 
+    const visioFileUri = virtualFileUri;
+
     virtualFileUuid = uuid();
     virtualFileUri = `http://mu.semte.ch/services/file-service/files/${virtualFileUuid}`;
     virtualFileName = path.basename(filePath, "vsdx") + ".bpmn";
 
-    const visioFileInsertQuery = generateVisioFileInsertQuery(
+    const bpmnVisioFileInsertQuery = generateBpmnVisioFileInsertQuery(
       virtualFileUuid,
       virtualFileUri,
       virtualFileName,
-      statSync(filePath).size
+      statSync(filePath).size,
+      visioFileUri
     );
-    await update(visioFileInsertQuery);
+    await update(bpmnVisioFileInsertQuery);
 
     filePath = path.join(path.dirname(filePath), virtualFileName);
-    console.log("updated file path:", filePath);
   }
 
   runAsyncJob(JOB_GRAPH, JOB_OPERATION, groupUri, virtualFileUri, () =>
