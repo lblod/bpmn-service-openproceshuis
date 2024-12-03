@@ -1,4 +1,10 @@
-import { sparqlEscapeString, sparqlEscapeUri } from "mu";
+import {
+  uuid,
+  sparqlEscapeString,
+  sparqlEscapeUri,
+  sparqlEscapeDateTime,
+  sparqlEscapeInt,
+} from "mu";
 
 export function generateTriplesInsertQuery(triples) {
   // prettier-ignore
@@ -12,14 +18,17 @@ export function generateFileUriSelectQuery(virtualFileUuid) {
   // prettier-ignore
   return `
     PREFIX mu: <http://mu.semte.ch/vocabularies/core/>
+    PREFIX nfo: <http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#>
     PREFIX nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>
     PREFIX dbpedia: <http://dbpedia.org/ontology/>
 
-    SELECT ?virtualFileUri ?physicalFileUri ?fileExtension
+    SELECT *
     WHERE {
-      ?virtualFileUri mu:uuid ${sparqlEscapeString(virtualFileUuid)} .
+      ?virtualFileUri mu:uuid ${sparqlEscapeString(virtualFileUuid)} ;
+        nfo:fileName ?virtualFileName ;
+        dbpedia:fileExtension ?fileExtension .
+
       ?physicalFileUri nie:dataSource ?virtualFileUri .
-      ?physicalFileUri dbpedia:fileExtension ?fileExtension .
     }`;
 }
 
@@ -41,5 +50,49 @@ export function generateFileGroupLinkInsertQuery(virtualFileUri, groupUri) {
 
     INSERT DATA {
       ${sparqlEscapeUri(virtualFileUri)} schema:publisher ${sparqlEscapeUri(groupUri)} .
+    }`;
+}
+
+export function generateVisioFileInsertQuery(
+  virtualFileUuid,
+  virtualFileUri,
+  virtualFileName,
+  fileSize
+) {
+  const fileFormat = "application/octet-stream; charset=binary";
+  const fileExtension = "vsdx";
+  const now = new Date();
+
+  const physicalFileUuid = uuid();
+  const physicalFileName = `${physicalFileUuid}.${fileExtension}`;
+  const physicalFileUri = `share://${physicalFileName}`;
+
+  // prettier-ignore
+  return `
+    PREFIX nfo: <http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#>
+    PREFIX dbpedia: <http://dbpedia.org/ontology/>
+    PREFIX mu: <http://mu.semte.ch/vocabularies/core/>
+    PREFIX dc: <http://purl.org/dc/terms/>
+    PREFIX nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>
+
+    INSERT DATA {
+      ${sparqlEscapeUri(virtualFileUri)} a nfo:FileDataObject ;
+          nfo:fileName ${sparqlEscapeString(virtualFileName)} ;
+          mu:uuid ${sparqlEscapeString(virtualFileUuid)} ;
+          dc:format ${sparqlEscapeString(fileFormat)} ;
+          nfo:fileSize ${sparqlEscapeInt(fileSize)} ;
+          dbpedia:fileExtension ${sparqlEscapeString(fileExtension)} ;
+          dc:created ${sparqlEscapeDateTime(now)} ;
+          dc:modified ${sparqlEscapeDateTime(now)} .
+
+      ${sparqlEscapeUri(physicalFileUri)} a nfo:FileDataObject ;
+          nie:dataSource ${sparqlEscapeUri(virtualFileUri)} ;
+          nfo:fileName ${sparqlEscapeString(physicalFileName)} ;
+          mu:uuid ${sparqlEscapeString(physicalFileUuid)} ;
+          dc:format ${sparqlEscapeString(fileFormat)} ;
+          nfo:fileSize ${sparqlEscapeInt(fileSize)} ;
+          dbpedia:fileExtension ${sparqlEscapeString(fileExtension)} ;
+          dc:created ${sparqlEscapeDateTime(now)} ;
+          dc:modified ${sparqlEscapeDateTime(now)} .
     }`;
 }

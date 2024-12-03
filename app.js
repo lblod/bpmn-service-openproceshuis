@@ -1,15 +1,16 @@
-import { app, update, query, errorHandler, uuid } from "mu";
+import { app, update, query, errorHandler } from "mu";
 import { querySudo } from "@lblod/mu-auth-sudo";
 import bodyParser from "body-parser";
 import { readFile } from "fs/promises";
 import * as RmlMapper from "@comake/rmlmapper-js";
 import { generateMapping } from "./bbo-mapping.js";
-import { existsSync } from "fs";
+import { existsSync, statSync } from "fs";
 import {
   generateTriplesInsertQuery,
   generateFileUriSelectQuery,
   generateGroupUriSelectQuery,
   generateFileGroupLinkInsertQuery,
+  generateVisioFileInsertQuery,
 } from "./sparql-queries.js";
 import { runAsyncJob } from "./job.js";
 import { PythonShell } from "python-shell";
@@ -41,14 +42,15 @@ app.post("/", async (req, res) => {
     return res.status(401).send("User not affiliated with any organization.");
   }
 
-  const virtualFileUuid = req.query.id;
+  let virtualFileUuid = req.query.id;
   const fileUriQuery = generateFileUriSelectQuery(virtualFileUuid);
   const fileUriResult = await query(fileUriQuery);
   const fileUriBindings = fileUriResult.results.bindings;
   if (fileUriBindings.length === 0) {
     return res.status(404).send("Not Found");
   }
-  const virtualFileUri = fileUriBindings[0].virtualFileUri.value;
+  let virtualFileUri = fileUriBindings[0].virtualFileUri.value;
+  let virtualFileName = fileUriBindings[0].virtualFileName.value;
   const physicalFileUri = fileUriBindings[0].physicalFileUri.value;
   const fileExtension = fileUriBindings[0].fileExtension.value;
 
@@ -68,14 +70,22 @@ app.post("/", async (req, res) => {
   }
 
   if (fileExtension === "vsdx") {
-    try {
-      await PythonShell.run("convert_vsdx_to_bpmn.py", { args: [filePath] });
-      const fileName = path.basename(filePath, path.extname(filePath));
-      filePath = path.join(path.dirname(filePath), fileName + ".bpmn");
-      console.log("updated file path:", filePath);
-    } catch (error) {
-      console.error("Error running Python script:", error);
-    }
+    await PythonShell.run("convert_vsdx_to_bpmn.py", { args: [filePath] });
+
+    virtualFileUuid = uuid();
+    virtualFileUri = `http://mu.semte.ch/services/file-service/files/${virtualFileUuid}`;
+    virtualFileName = path.basename(filePath, "vsdx") + ".bpmn";
+
+    const visioFileInsertQuery = generateVisioFileInsertQuery(
+      virtualFileUuid,
+      virtualFileUri,
+      virtualFileName,
+      statSync(filePath).size
+    );
+    await update(visioFileInsertQuery);
+
+    filePath = path.join(path.dirname(filePath), virtualFileName);
+    console.log("updated file path:", filePath);
   }
 
   runAsyncJob(JOB_GRAPH, JOB_OPERATION, groupUri, virtualFileUri, () =>
