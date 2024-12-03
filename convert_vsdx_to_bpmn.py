@@ -12,7 +12,6 @@ import sys
 # INPUT
 
 visio_file_path = sys.argv[1]
-print('visio file path:', visio_file_path)
 visio = VisioFile(visio_file_path)
 page = visio.get_page(0) # TODO: loop over pages
 
@@ -90,7 +89,5 @@ graphviz.layout(definitions)
 bpmn = util.model2xml(definitions)
 
 root_file_path, _ = os.path.splitext(visio_file_path)
-print('root file path:', root_file_path)
 bpmn_file_path = f"{root_file_path}.bpmn"
-print('bpmn file path:', bpmn_file_path)
 Path(bpmn_file_path).write_text(bpmn)
