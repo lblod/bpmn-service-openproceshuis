@@ -75,6 +75,7 @@ export function generateBpmnVisioFileInsertQuery(
     PREFIX mu: <http://mu.semte.ch/vocabularies/core/>
     PREFIX dc: <http://purl.org/dc/terms/>
     PREFIX nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>
+    PREFIX prov: <http://www.w3.org/ns/prov#>
 
     INSERT DATA {
       ${sparqlEscapeUri(virtualFileUri)} a nfo:FileDataObject ;
