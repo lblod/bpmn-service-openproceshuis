@@ -1,4 +1,4 @@
-import { app, update, query, errorHandler } from "mu";
+import { app, update, query, errorHandler, uuid } from "mu";
 import { querySudo } from "@lblod/mu-auth-sudo";
 import bodyParser from "body-parser";
 import { readFile } from "fs/promises";
