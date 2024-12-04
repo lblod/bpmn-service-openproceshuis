@@ -88,6 +88,5 @@ definitions.append(diagram)
 graphviz.layout(definitions)
 bpmn = util.model2xml(definitions)
 
-root_file_path, _ = os.path.splitext(visio_file_path)
-bpmn_file_path = f"{root_file_path}.bpmn"
+bpmn_file_path = sys.argv[2]
 Path(bpmn_file_path).write_text(bpmn)

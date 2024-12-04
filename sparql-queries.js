@@ -55,18 +55,17 @@ export function generateFileGroupLinkInsertQuery(virtualFileUri, groupUri) {
 
 export function generateBpmnVisioFileInsertQuery(
   virtualFileUuid,
-  virtualFileUri,
   virtualFileName,
+  virtualFileUri,
+  physicalFileUuid,
+  physicalFileName,
+  physicalFileUri,
   fileSize,
   visioFileUri
 ) {
   const fileFormat = "text/xml; charset=utf-8";
   const fileExtension = "bpmn";
   const now = new Date();
-
-  const physicalFileUuid = uuid();
-  const physicalFileName = `${physicalFileUuid}.${fileExtension}`;
-  const physicalFileUri = `share://${physicalFileName}`;
 
   // prettier-ignore
   return `

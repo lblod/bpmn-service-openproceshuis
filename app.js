@@ -51,7 +51,7 @@ app.post("/", async (req, res) => {
   }
   let virtualFileUri = fileUriBindings[0].virtualFileUri.value;
   let virtualFileName = fileUriBindings[0].virtualFileName.value;
-  const physicalFileUri = fileUriBindings[0].physicalFileUri.value;
+  let physicalFileUri = fileUriBindings[0].physicalFileUri.value;
   const fileExtension = fileUriBindings[0].fileExtension.value;
 
   const fileGroupLinkInsertQuery = generateFileGroupLinkInsertQuery(
@@ -60,8 +60,11 @@ app.post("/", async (req, res) => {
   );
   await update(fileGroupLinkInsertQuery);
 
-  let filePath = physicalFileUri.replace("share://", STORAGE_FOLDER_PATH);
-  if (!existsSync(filePath)) {
+  let physicalFilePath = physicalFileUri.replace(
+    "share://",
+    STORAGE_FOLDER_PATH
+  );
+  if (!existsSync(physicalFilePath)) {
     return res
       .status(500)
       .send(
@@ -70,28 +73,38 @@ app.post("/", async (req, res) => {
   }
 
   if (fileExtension === "vsdx") {
-    await PythonShell.run("convert_vsdx_to_bpmn.py", { args: [filePath] });
-
-    const visioFileUri = virtualFileUri;
+    const visioVirtualFileUri = virtualFileUri;
+    const visioPhysicalFilePath = physicalFilePath;
 
     virtualFileUuid = uuid();
+    virtualFileName = path.basename(virtualFileName, "vsdx") + "bpmn";
     virtualFileUri = `http://mu.semte.ch/services/file-service/files/${virtualFileUuid}`;
-    virtualFileName = path.basename(filePath, "vsdx") + ".bpmn";
+
+    const physicalFileUuid = uuid();
+    const physicalFileName = `${physicalFileUuid}.bpmn`;
+    physicalFileUri = `share://${physicalFileName}`;
+
+    physicalFilePath = physicalFileUri.replace("share://", STORAGE_FOLDER_PATH);
+
+    await PythonShell.run("convert_vsdx_to_bpmn.py", {
+      args: [visioPhysicalFilePath, physicalFilePath],
+    });
 
     const bpmnVisioFileInsertQuery = generateBpmnVisioFileInsertQuery(
       virtualFileUuid,
-      virtualFileUri,
       virtualFileName,
-      statSync(filePath).size,
-      visioFileUri
+      virtualFileUri,
+      physicalFileUuid,
+      physicalFileName,
+      physicalFileUri,
+      statSync(physicalFilePath).size,
+      visioVirtualFileUri
     );
     await update(bpmnVisioFileInsertQuery);
-
-    filePath = path.join(path.dirname(filePath), virtualFileName);
   }
 
   runAsyncJob(JOB_GRAPH, JOB_OPERATION, groupUri, virtualFileUri, () =>
-    extractAndInsertProcessSteps(filePath, virtualFileUri)
+    extractAndInsertProcessSteps(physicalFilePath, virtualFileUri)
   );
 
   return res
